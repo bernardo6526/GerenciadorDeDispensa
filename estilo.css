@@ -173,6 +173,10 @@
   .buttonGroup.end {
     justify-content: flex-end;
   }
+
+  .buttonGroup.center {
+    justify-content: center;
+  }
   
   .buttonGroup .button.half {
     flex: 0.5;
@@ -452,4 +456,5 @@
   .mb3{
     margin-bottom: 3rem;
   }
+  
   
