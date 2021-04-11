@@ -17,17 +17,23 @@
   </header>
   <nav class="navBar bottom">
     <div class="buttonGroup">
-      <button id="tab1" class="button tab active" for="componente1">
+      <button id="tab1" class="button tab" for="componente1">
         Listas de Compras
       </button>
-      <button id="tab2" class="button tab" for="componente2">Dispensa</button>
-      <button id="tab2" class="button tab" for="componente3">Adicionar Item de Compra</button>
+      <button id="tab2" class="button tab active" for="componente2">Dispensa</button>
+      <button id="tab2" class="button tab" for="componente3">Ver itens da compra</button>
+      <button id="tab2" class="button tab" for="componente4">Adicionar Item na Dispensa</button>
     </div>
   </nav>
 
   <div id="componente1" class="component">
     <div class="componentContent">
-      <h1 class="componentHeader">Minhas Listas de Compras</h1>
+      <div class="componentHeader">
+        <h1>Listas de Compras</h1>
+        <button id="btnAdic" class="button primary mvLeft">
+          <img src="./imagens/plus1.png" />
+        </button>
+      </div>
       <ul class="list mt4">
         <li>Item 1</li>
         <li class="active">Item 2</li>
@@ -52,12 +58,18 @@
 
   <div id="componente2" class="component">
     <div class="componentContent">
-      <h1 class="componentHeader">Itens da dispensa</h1>
+      <div class="componentHeader">
+        <h1>Itens da Dispensa</h1>
+        <button id="btnAdic" class="button primary mvLeft">
+          <img src="./imagens/plus1.png" />
+        </button>
+      </div>
       <div class="tableHeader">
         <table class="table">
           <tr>
             <th>Item</th>
-            <th>Quantidade</th>
+            <th>Qtd</th>
+            <th>Unidade</th>
             <th>Validade</th>
           </tr>
         </table>
@@ -66,101 +78,37 @@
         <tr>
           <td>Torta de mousse de limão</td>
           <td>12</td>
+          <td>unidade</td>
           <td>11/04/2021</td>
         </tr>
         <tr>
-          <td>Coxinha1</td>
+          <td>Carne</td>
           <td>1</td>
+          <td>Kg</td>
           <td>11/04/2021</td>
         </tr>
         <tr>
-          <td>Coxinha2</td>
+          <td>Carne</td>
           <td>1</td>
+          <td>Kg</td>
           <td>11/04/2021</td>
         </tr>
         <tr>
-          <td>Coxinha3</td>
+          <td>Carne</td>
           <td>1</td>
+          <td>Kg</td>
           <td>11/04/2021</td>
         </tr>
         <tr>
-          <td>Coxinha4</td>
+          <td>Carne</td>
           <td>1</td>
+          <td>Kg</td>
           <td>11/04/2021</td>
         </tr>
         <tr>
-          <td>Coxinha</td>
+          <td>Carne</td>
           <td>1</td>
-          <td>11/04/2021</td>
-        </tr>
-        <tr>
-          <td>Coxinha</td>
-          <td>1</td>
-          <td>11/04/2021</td>
-        </tr>
-        <tr>
-          <td>Coxinha</td>
-          <td>1</td>
-          <td>11/04/2021</td>
-        </tr>
-        <tr>
-          <td>Coxinha</td>
-          <td>1</td>
-          <td>11/04/2021</td>
-        </tr>
-        <tr>
-          <td>Coxinha</td>
-          <td>1</td>
-          <td>11/04/2021</td>
-        </tr>
-        <tr>
-          <td>Coxinha</td>
-          <td>1</td>
-          <td>11/04/2021</td>
-        </tr>
-        <tr>
-          <td>Coxinha</td>
-          <td>1</td>
-          <td>11/04/2021</td>
-        </tr>
-        <tr>
-          <td>Coxinha</td>
-          <td>1</td>
-          <td>11/04/2021</td>
-        </tr>
-        <tr>
-          <td>Coxinha</td>
-          <td>1</td>
-          <td>11/04/2021</td>
-        </tr>
-        <tr>
-          <td>Coxinha</td>
-          <td>1</td>
-          <td>11/04/2021</td>
-        </tr>
-        <tr>
-          <td>Coxinha</td>
-          <td>1</td>
-          <td>11/04/2021</td>
-        </tr>
-        <tr>
-          <td>Coxinha</td>
-          <td>1</td>
-          <td>11/04/2021</td>
-        </tr>
-        <tr>
-          <td>Coxinha</td>
-          <td>1</td>
-          <td>11/04/2021</td>
-        </tr>
-        <tr>
-          <td>Coxinha</td>
-          <td>1</td>
-          <td>11/04/2021</td>
-        </tr>
-        <tr>
-          <td>Coxinha</td>
-          <td>1</td>
+          <td>Kg</td>
           <td>11/04/2021</td>
         </tr>
       </table>
@@ -169,24 +117,131 @@
 
   <div id="componente3" class="component">
     <div class="componentContent">
-      <h1>Compra do Mês</h1>
-      <table class="table mt1">
+      <div class="componentHeader">
+        <h1>Compra do Mês</h1>
+        <button id="btnAdic" class="button primary mvLeft">
+          <img src="./imagens/plus1.png" />
+        </button>
+      </div>
+      <div class="tableHeader">
+        <table class="table">
+          <tr>
+            <th>Item</th>
+            <th>Qtd</th>
+            <th>Unidade</th>
+            <th></th>
+          </tr>
+        </table>
+      </div>
+      <table class="table mt6">
         <tr>
-          <th>Item</th>
-          <th>Quantidade</th>
-          <th>Comprou?</th>
+          <td>Bololololollolololololollololololo</td>
+          <td>1</td>
+          <td>unidade</td>
+          <td><input type="checkbox" id="item1"></td>
         </tr>
         <tr>
-          <td>Bolo</td>
+          <td>Carne</td>
           <td>1</td>
-          <td><input type="checkbox" id="item1" class="checkbox"></td>
+          <td>Kg</td>
+          <td><input type="checkbox" id="item2"></td>
         </tr>
         <tr>
-          <td>Coxinha</td>
+          <td>Carne</td>
           <td>1</td>
-          <td><input type="checkbox" id="item2" class="checkbox"></td>
+          <td>Kg</td>
+          <td><input type="checkbox" id="item2"></td>
+        </tr>
+        <tr>
+          <td>Carne</td>
+          <td>1</td>
+          <td>Kg</td>
+          <td><input type="checkbox" id="item2"></td>
+        </tr>
+        <tr>
+          <td>Carne</td>
+          <td>1</td>
+          <td>Kg</td>
+          <td><input type="checkbox" id="item2"></td>
+        </tr>
+        <tr>
+          <td>Carne</td>
+          <td>1</td>
+          <td>Kg</td>
+          <td><input type="checkbox" id="item2"></td>
+        </tr>
+        <tr>
+          <td>Carne</td>
+          <td>1</td>
+          <td>Kg</td>
+          <td><input type="checkbox" id="item2"></td>
+        </tr>
+        <tr>
+          <td>Carne</td>
+          <td>1</td>
+          <td>Kg</td>
+          <td><input type="checkbox" id="item2"></td>
+        </tr>
+        <tr>
+          <td>Carne</td>
+          <td>1</td>
+          <td>Kg</td>
+          <td><input type="checkbox" id="item2"></td>
+        </tr>
+        <tr>
+          <td>Carne</td>
+          <td>1</td>
+          <td>Kg</td>
+          <td><input type="checkbox" id="item2"></td>
+        </tr>
+        <tr>
+          <td>Carne</td>
+          <td>1</td>
+          <td>Kg</td>
+          <td><input type="checkbox" id="item2"></td>
+        </tr>
+        <tr>
+          <td>Carne</td>
+          <td>1</td>
+          <td>Kg</td>
+          <td><input type="checkbox" id="item2"></td>
         </tr>
       </table>
+      <div class="buttonGroup">
+        <button id="btnAdic" class="button primary">
+          Enviar para dispensa
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="componente4" class="component hidden">
+    <div class="componentHeader">
+      <h1 class="componentTitle">Adicionar item na dispensa</h1>
+    </div>
+    <div class="componentContent">
+      <div class="field">
+        <label class="fixed" for="inputNovaTarefa">Item:</label>
+        <input id="inputNovaTarefa" type="text" autocomplete="off" />
+      </div>
+      <div class="field">
+        <label class="fixed" for="inputNovaTarefa">Qtd:</label>
+        <input type="number" id="quantity" name="quantity" min="0" max="1000">
+      </div>
+      <div class="field">
+        <label class="fixed" for="inputNovaTarefa">Unidade:</label>
+        <input id="inputNovaTarefa" type="text" autocomplete="off" />
+      </div>
+      <div class="field">
+        <label class="fixed" for="inputNovaTarefa">Validade:</label>
+        <input type="date" id="birthday" name="birthday">
+      </div>
+      <div class="buttonGroup mt1 end">
+        <button id="btnCanc1" class="button quarter light">Cancelar</button>
+        <button id="btnInc" class="button quarter primary">
+          Incluir
+        </button>
+      </div>
     </div>
   </div>
 
