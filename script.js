@@ -5,6 +5,9 @@ let idLista = -1;
 
 let dispensa = [];
 
+// flag para controlar as edicoes
+let podeEditar = true;
+
 
 onload = () => {
   // carrega os recursos salvos
@@ -49,7 +52,7 @@ onload = () => {
   };
   // NavBar ---------------------------------------------
 
-  // Formulario add lista de compras ---------------------------------------------
+  // Formulario add lista de compras 
   document.querySelector('#addCompra').onclick = () => {
     // ativa a tela de formulario
     ativa('formulario');
@@ -117,8 +120,8 @@ onload = () => {
       // mostra a barra de navegacao
       nav.visibility = 'visible';
     };
-  };
-  // Formulario add lista de compras ---------------------------------------------
+  }; // fim Formulario add lista de compras 
+
 
   // Formulario add produto para compra ---------------------------------------------
   document.querySelector('#addProduto').onclick = () => {
@@ -153,16 +156,16 @@ onload = () => {
       let inputNome = document.getElementById('nome');
       let inputQtd = document.getElementById('qtd');
       let inputUnidade = document.getElementById('unidade');
-      
+
       // torna vermelho o campo com o valor faltando 
       //ou remove o vermelho do campo com valor preenchido
-      if (inputNome.value == '')inputNome.style.borderColor = '#f00';
+      if (inputNome.value == '') inputNome.style.borderColor = '#f00';
       else inputNome.style.borderColor = '#8f9799';
-      
-      if (inputQtd.value == '')inputQtd.style.borderColor = '#f00';
+
+      if (inputQtd.value == '') inputQtd.style.borderColor = '#f00';
       else inputQtd.style.borderColor = '#8f9799';
 
-      if (inputUnidade.value == '')inputUnidade.style.borderColor = '#f00';
+      if (inputUnidade.value == '') inputUnidade.style.borderColor = '#f00';
       else inputUnidade.style.borderColor = '#8f9799';
 
       // se os campos nao estiverem vazios
@@ -220,11 +223,10 @@ onload = () => {
       // mostra a barra de navegacao
       nav.visibility = 'visible';
     };
-  };
-  // Formulario add produto para compra ---------------------------------------------
+  }; // fim Formulario add produto para compra
 
 
-};
+}; // fim onload
 
 const ativa = (comp) => {
   let listaDeTelas = document.querySelectorAll('body > .component');
@@ -269,7 +271,7 @@ const mostraListasCompras = () => {
     lc.appendChild(lista);
 
   }); // fim do for
-};
+}; // fim mostraListasCompras
 
 const alterarListaCompras = (lista) => {
   // ativa a tela de formulario
@@ -381,18 +383,19 @@ const alterarListaCompras = (lista) => {
     }
 
   };
-} // fim alterar lista compras
+} // fim alterarListaCompras
 
 const mostraProdutosCompra = () => {
   // cria um vetor de produtos da compra especifica
   let produtos = produtosCompras.filter((obj) => obj.idLista == idLista);
 
+  // se nao houver produtos
   if (produtos.length == 0) {
     let enviarCompra = document.getElementById('enviarCompra');
     // esconde o botao de enviar para dispensa
     enviarCompra.classList.add("hidden");
   } else {
-    // mostra o botao de enviar para dispensa
+    // caso contrario mostra o botao de enviar para dispensa
     enviarCompra.classList.remove("hidden");
   }
 
@@ -400,6 +403,7 @@ const mostraProdutosCompra = () => {
   const pc = document.querySelector('#produtosCompra');
   pc.innerHTML = '';
 
+  // itera o vetor de produtos
   produtos.forEach((i) => {
     // cria a linha da tabela
     let tr = document.createElement('tr');
@@ -429,17 +433,138 @@ const mostraProdutosCompra = () => {
     tr.appendChild(unidade);
     tr.appendChild(checkArea);
 
+    //alterar nome
+    nome.onclick = () => {
+      nome.onclick = () => {
+        if (podeEditar) {
+          // determina a flag como false para evitar outras alteracoes
+          podeEditar = false;
+          // cria o elemento para edicao
+          var inputNome = document.createElement("INPUT");
+          // define os atributos do elemento
+          inputNome.setAttribute("type", "text");
+          inputNome.setAttribute("class", "field alterarInput");
+          inputNome.id = 'inputNome' + i.id;
+          inputNome.value = i.nome;
 
-    tr.onclick = () => {
-      ativa('tela3');
-      //alterarProdutoCompra(i);
-    };
+          // adiciona o elemento no conteudo
+          nome.innerHTML = '';
+          nome.appendChild(inputNome);
+
+          // cria o dom do elemento
+          domQtd = document.querySelector('#inputNome' + i.id)
+          
+          // foca no elemento
+          domQtd.focus();
+
+          // se tiver blur salva a alteracao
+          domQtd.addEventListener('blur', () => {
+            podeEditar = true; // permite uma nova alteracao
+            // altera o elemento no vetor
+            let pos = produtosCompras.findIndex((obj) => obj.id==i.id);
+            produtosCompras[pos].nome = inputNome.value;
+            nome.innerHTML = i.nome; // altera na visualizacao
+
+            // salva a alteracao
+            localStorage.setItem('produtosCompras', JSON.stringify(produtosCompras));
+
+          });
+
+        } // fim do if pode editar
+      }; // fim do segundo click
+    }; // fim do nome.onclick()
+
+    // alterar qtd
+    qtd.onclick = () => {
+      qtd.onclick = () => {
+        if (podeEditar) {
+          // determina a flag como false para evitar outras alteracoes
+          podeEditar = false;
+          // cria o elemento para edicao
+          var inputQtd = document.createElement("INPUT");
+          // define os atributos do elemento
+          inputQtd.setAttribute("type", "number");
+          inputQtd.setAttribute("class", "field alterarInput");
+          inputQtd.id = 'inputQtd' + i.id;
+          inputQtd.value = i.qtd;
+
+          // adiciona o elemento no conteudo
+          qtd.innerHTML = '';
+          qtd.appendChild(inputQtd);
+
+          // cria o dom do elemento
+          domQtd = document.querySelector('#inputQtd' + i.id)
+          
+          // foca no elemento
+          domQtd.focus();
+
+          // se tiver blur salva a alteracao
+          domQtd.addEventListener('blur', () => {
+            podeEditar = true; // permite uma nova alteracao
+            // altera o elemento no vetor
+            let pos = produtosCompras.findIndex((obj) => obj.id==i.id);
+            produtosCompras[pos].qtd = inputQtd.value;
+            qtd.innerHTML = i.qtd; // altera na visualizacao
+
+            // salva a alteracao
+            localStorage.setItem('produtosCompras', JSON.stringify(produtosCompras));
+
+          });
+
+        } // fim do if pode editar
+      }; // fim do segundo click
+    }; // fim do qtd.onclick()
+
+    // alterar unidade
+    unidade.onclick = () => {
+      unidade.onclick = () => {
+        if (podeEditar) {
+          // determina a flag como false para evitar outras alteracoes
+          podeEditar = false;
+          // cria o elemento para edicao
+          var inputUnidade = document.createElement("INPUT");
+          // define os atributos do elemento
+          inputUnidade.setAttribute("type", "text");
+          inputUnidade.setAttribute("class", "field alterarInput");
+          inputUnidade.id = 'inputUnidade' + i.id;
+          inputUnidade.value = i.unidade;
+
+          // adiciona o elemento no conteudo
+          unidade.innerHTML = '';
+          unidade.appendChild(inputUnidade);
+
+          // cria o dom do elemento
+          domUnidade = document.querySelector('#inputUnidade' + i.id)
+          
+          // foca no elemento
+          domUnidade.focus();
+
+          // se tiver blur salva a alteracao
+          domUnidade.addEventListener('blur', () => {
+            podeEditar = true; // permite uma nova alteracao
+            // altera o elemento no vetor
+            let pos = produtosCompras.findIndex((obj) => obj.id==i.id);
+            produtosCompras[pos].unidade = inputUnidade.value;
+            unidade.innerHTML = i.unidade; // altera na visualizacao
+
+            // salva a alteracao
+            localStorage.setItem('produtosCompras', JSON.stringify(produtosCompras));
+
+          });
+
+        } // fim do if pode editar
+      }; // fim do segundo click
+    }; // fim do unidade.onclick()
 
     // adiciona a linha da tabela ao conteudo
     pc.appendChild(tr);
 
   }); // fim do for
-};
+}; // fim do mostraProdutosCompra
+
+const alterarProdutoCompra = (idLista,id) => {
+  
+}; 
 
 const desabilitaCampos = () => {
   // esconde campos opcionais
@@ -458,4 +583,3 @@ const habilitaCampo = (idCampo) => {
   let elemento = document.getElementById(idCampo).style;
   elemento.visibility = 'visible'; elemento.position = 'relative';
 }
-
