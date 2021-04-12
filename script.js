@@ -1,6 +1,7 @@
 let listasDeCompras = [];
 
 let produtosCompras = [];
+
 let idLista = -1;
 
 let dispensa = [];
@@ -399,6 +400,21 @@ const mostraProdutosCompra = () => {
     enviarCompra.classList.remove("hidden");
   }
 
+  enviarCompra.onclick = () => {
+    // filtra os produtos marcados
+    let addDispensa = produtos.filter((obj) => obj.check == true);
+    // adiciona ao vetor de dispensa
+    dispensa = [...dispensa, ...addDispensa];
+    // salva a alteracao
+    localStorage.setItem('dispensa', JSON.stringify(dispensa));
+
+    // limpa os checkbox
+    produtos.forEach((i) => {
+      i.check = false;
+      document.getElementById("check"+i.id).checked = i.check;
+    });   
+  };
+
   // cria o objeto dom que ira carregar os produtos
   const pc = document.querySelector('#produtosCompra');
   pc.innerHTML = '';
@@ -422,6 +438,9 @@ const mostraProdutosCompra = () => {
     checkbox.id = 'check' + i.id;
     checkbox.value = i.check;
 
+    // salva a alteracao
+    localStorage.setItem('produtosCompras', JSON.stringify(produtosCompras));
+
     // insere o check box no td
     let checkArea = document.createElement('td');
     checkArea.appendChild(checkbox);
@@ -433,9 +452,16 @@ const mostraProdutosCompra = () => {
     tr.appendChild(unidade);
     tr.appendChild(checkArea);
 
-    tr.onclick = () => {
-
-    }
+    checkbox.addEventListener('change', function () {
+      if (this.checked) {
+        i.check = true;
+        console.log(i.check);
+      } else {
+        i.check = false;
+      }
+      // salva a alteracao
+      localStorage.setItem('produtosCompras', JSON.stringify(produtosCompras));
+    });
 
     //alterar nome ou excluir linha
     nome.onclick = () => {
