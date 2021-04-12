@@ -4,10 +4,19 @@
   <title>Gerenciador de Dispensa</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="manifest" href="/manifest.webmanifest" crossorigin="use-credentials" />
   <link rel="icon" type="image/png" href="/imagens/icones/cookiejarfavicon.ico" />
   <link rel="stylesheet" href="./estilo.css" />
   <script src="./script.js"></script>
+  
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="blue">
+  <meta name="apple-mobile-web-app-title" content="Gerenciador de Dispensa">
+  <link rel="apple-touch-icon" sizes="72x72" href="/imagens/icones/cookiejar72.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/imagens/icones/cookiejar144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/imagens/icones/cookiejar152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/imagens/icones/cookiejar180.png">
 </head>
 
 <body>
@@ -17,50 +26,32 @@
   </header>
   <nav class="navBar bottom">
     <div class="buttonGroup">
-      <button id="tab1" class="button tab" for="componente1">
+      <button id="tab1" class="button tab active" for="tela1">
         Listas de Compras
       </button>
-      <button id="tab2" class="button tab active" for="componente2">Dispensa</button>
-      <button id="tab2" class="button tab" for="componente3">Ver itens da compra</button>
-      <button id="tab2" class="button tab" for="componente4">Adicionar Item na Dispensa</button>
+      <button id="tab2" class="button tab" for="tela2">Dispensa</button>
     </div>
   </nav>
 
-  <div id="componente1" class="component">
+  <div id="tela1" class="component hidden">
     <div class="componentContent">
       <div class="componentHeader">
         <h1>Listas de Compras</h1>
-        <button id="btnAdic" class="button primary mvLeft">
+        <button id="addCompra" class="button primary mvLeft3">
           <img src="./imagens/plus1.png" />
         </button>
       </div>
-      <ul class="list mt4">
-        <li>Item 1</li>
-        <li class="active">Item 2</li>
-        <li>Item 3</li>
-        <li>Item 4</li>
-        <li>Item 4</li>
-        <li>Item 4</li>
-        <li>Item 4</li>
-        <li>Item 4</li>
-        <li>Item 4</li>
-        <li>Item 4</li>
-        <li>Item 4</li>
-        <li>Item 4</li>
-        <li>Item 4</li>
-        <li>Item 4</li>
-        <li>Item 4</li>
-        <li>Item 4</li>
-        <li>Item final</li>
+      <ul class="list mt4" id="listaCompras">
+        <li>Compra do Mês</li>
+      </ul>
     </div>
-    </ul>
   </div>
 
-  <div id="componente2" class="component">
+  <div id="tela2" class="component hidden">
     <div class="componentContent">
       <div class="componentHeader">
         <h1>Itens da Dispensa</h1>
-        <button id="btnAdic" class="button primary mvLeft">
+        <button id="addDispensa" class="button primary mvLeft3" for="tela4">
           <img src="./imagens/plus1.png" />
         </button>
       </div>
@@ -81,45 +72,15 @@
           <td>unidade</td>
           <td>11/04/2021</td>
         </tr>
-        <tr>
-          <td>Carne</td>
-          <td>1</td>
-          <td>Kg</td>
-          <td>11/04/2021</td>
-        </tr>
-        <tr>
-          <td>Carne</td>
-          <td>1</td>
-          <td>Kg</td>
-          <td>11/04/2021</td>
-        </tr>
-        <tr>
-          <td>Carne</td>
-          <td>1</td>
-          <td>Kg</td>
-          <td>11/04/2021</td>
-        </tr>
-        <tr>
-          <td>Carne</td>
-          <td>1</td>
-          <td>Kg</td>
-          <td>11/04/2021</td>
-        </tr>
-        <tr>
-          <td>Carne</td>
-          <td>1</td>
-          <td>Kg</td>
-          <td>11/04/2021</td>
-        </tr>
       </table>
     </div>
   </div>
 
-  <div id="componente3" class="component">
+  <div id="tela3" class="component hidden">
     <div class="componentContent">
       <div class="componentHeader">
         <h1>Compra do Mês</h1>
-        <button id="btnAdic" class="button primary mvLeft">
+        <button id="addProduto" class="button primary mvLeft3">
           <img src="./imagens/plus1.png" />
         </button>
       </div>
@@ -135,112 +96,44 @@
       </div>
       <table class="table mt6">
         <tr>
-          <td>Bololololollolololololollololololo</td>
+          <td>Bolo</td>
           <td>1</td>
           <td>unidade</td>
           <td><input type="checkbox" id="item1"></td>
         </tr>
-        <tr>
-          <td>Carne</td>
-          <td>1</td>
-          <td>Kg</td>
-          <td><input type="checkbox" id="item2"></td>
-        </tr>
-        <tr>
-          <td>Carne</td>
-          <td>1</td>
-          <td>Kg</td>
-          <td><input type="checkbox" id="item2"></td>
-        </tr>
-        <tr>
-          <td>Carne</td>
-          <td>1</td>
-          <td>Kg</td>
-          <td><input type="checkbox" id="item2"></td>
-        </tr>
-        <tr>
-          <td>Carne</td>
-          <td>1</td>
-          <td>Kg</td>
-          <td><input type="checkbox" id="item2"></td>
-        </tr>
-        <tr>
-          <td>Carne</td>
-          <td>1</td>
-          <td>Kg</td>
-          <td><input type="checkbox" id="item2"></td>
-        </tr>
-        <tr>
-          <td>Carne</td>
-          <td>1</td>
-          <td>Kg</td>
-          <td><input type="checkbox" id="item2"></td>
-        </tr>
-        <tr>
-          <td>Carne</td>
-          <td>1</td>
-          <td>Kg</td>
-          <td><input type="checkbox" id="item2"></td>
-        </tr>
-        <tr>
-          <td>Carne</td>
-          <td>1</td>
-          <td>Kg</td>
-          <td><input type="checkbox" id="item2"></td>
-        </tr>
-        <tr>
-          <td>Carne</td>
-          <td>1</td>
-          <td>Kg</td>
-          <td><input type="checkbox" id="item2"></td>
-        </tr>
-        <tr>
-          <td>Carne</td>
-          <td>1</td>
-          <td>Kg</td>
-          <td><input type="checkbox" id="item2"></td>
-        </tr>
-        <tr>
-          <td>Carne</td>
-          <td>1</td>
-          <td>Kg</td>
-          <td><input type="checkbox" id="item2"></td>
-        </tr>
       </table>
       <div class="buttonGroup">
-        <button id="btnAdic" class="button primary">
+        <button id="enviarCompra" class="button primary">
           Enviar para dispensa
         </button>
       </div>
     </div>
   </div>
 
-  <div id="componente4" class="component hidden">
+  <div id="tela4" class="component hidden">
     <div class="componentHeader">
-      <h1 class="componentTitle">Adicionar item na dispensa</h1>
+      <h1 class="componentTitle mvLeft2" id="lblNome"></h1>
     </div>
     <div class="componentContent">
-      <div class="field">
-        <label class="fixed" for="inputNovaTarefa">Item:</label>
-        <input id="inputNovaTarefa" type="text" autocomplete="off" />
+      <div class="field" id="divItem">
+        <label class="fixed" id="lblItem" for="inputNovaTarefa"></label>
+        <input id="nome" type="text" autocomplete="off" />
       </div>
-      <div class="field">
+      <div class="field" id="divQtd">
         <label class="fixed" for="inputNovaTarefa">Qtd:</label>
-        <input type="number" id="quantity" name="quantity" min="0" max="1000">
+        <input type="number" id="qtd" min="0" max="1000">
       </div>
-      <div class="field">
+      <div class="field" id="divUnidade">
         <label class="fixed" for="inputNovaTarefa">Unidade:</label>
-        <input id="inputNovaTarefa" type="text" autocomplete="off" />
+        <input id="unidade" type="text" autocomplete="off" />
       </div>
-      <div class="field">
+      <div class="field" id="divValidade">
         <label class="fixed" for="inputNovaTarefa">Validade:</label>
-        <input type="date" id="birthday" name="birthday">
+        <input type="date" id="validade" name="birthday">
       </div>
       <div class="buttonGroup mt1 center">
-        <button id="btnCanc1" class="button quarter light">Cancelar</button>
-        <button id="btnInc" class="button quarter primary">
-          Incluir
-        </button>
+        <button id="btnCanc" class="button quarter light">Cancelar</button>
+        <button id="btnInc" class="button quarter primary">Incluir</button>
       </div>
     </div>
   </div>
