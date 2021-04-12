@@ -468,5 +468,12 @@
   .mb3{
     margin-bottom: 3rem;
   }
+
+  .blockLabel{
+    display: block; /* add this */
+    width: 14rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
   
   

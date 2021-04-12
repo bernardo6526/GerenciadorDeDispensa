@@ -24,7 +24,7 @@
     <div class="cookieImg"><img src="imagens/icones/cookiejar72.png"></div>
     <div class="appName left">Gerenciador de Dispensa</div>
   </header>
-  <nav class="navBar bottom">
+  <nav id ="nav" class="navBar bottom">
     <div class="buttonGroup">
       <button id="tab1" class="button tab active" for="tela1">
         Listas de Compras
@@ -79,7 +79,7 @@
   <div id="tela3" class="component hidden">
     <div class="componentContent">
       <div class="componentHeader">
-        <h1>Compra do Mês</h1>
+        <h1>Itens da Compra</h1>
         <button id="addProduto" class="button primary mvLeft3">
           <img src="./imagens/plus1.png" />
         </button>
@@ -117,23 +117,35 @@
     <div class="componentContent">
       <div class="field" id="divItem">
         <label class="fixed" id="lblItem" for="inputNovaTarefa"></label>
-        <input id="nome" type="text" autocomplete="off" />
+        <input id="nome" type="text" autocomplete="off" value="" />
       </div>
       <div class="field" id="divQtd">
         <label class="fixed" for="inputNovaTarefa">Qtd:</label>
-        <input type="number" id="qtd" min="0" max="1000">
+        <input type="number" id="qtd" min="0" max="1000" value="" >
       </div>
       <div class="field" id="divUnidade">
         <label class="fixed" for="inputNovaTarefa">Unidade:</label>
-        <input id="unidade" type="text" autocomplete="off" />
+        <input id="unidade" type="text" autocomplete="off" value="" />
       </div>
       <div class="field" id="divValidade">
         <label class="fixed" for="inputNovaTarefa">Validade:</label>
-        <input type="date" id="validade" name="birthday">
+        <input type="date" id="validade" value="" >
       </div>
       <div class="buttonGroup mt1 center">
         <button id="btnCanc" class="button quarter light">Cancelar</button>
         <button id="btnInc" class="button quarter primary">Incluir</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="telaExclusao" class="component hidden">
+    <div class="componentHeader">
+      <h1 class="componentTitle mvLeft2" id="telaExclusao">Realmente deseja excluir?</h1>
+    </div>
+    <div class="componentContent">
+      <div class="buttonGroup mt1 center">
+        <button id="btnNao" class="button quarter light">Não</button>
+        <button id="btnSim" class="button quarter primary">Sim</button>
       </div>
     </div>
   </div>
