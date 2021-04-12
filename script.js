@@ -810,8 +810,8 @@ const mostraDispensa = () => {
     let unidade = document.createElement('td');
     unidade.innerHTML = i.unidade;
     let validade = document.createElement('td');
-    if(i.validade == null)validade.innerHTML = "dd/mm/aaaa";
-    else validade.innerHTML = i.validade;
+    if(i.validade == null)validade.innerHTML = "dd/mm/aa";
+    else validade.innerHTML = convertDate(i.validade);
 
 
     // adiciona os dados a linha
@@ -831,7 +831,7 @@ const mostraDispensa = () => {
           // define os atributos do elemento
           inputNome.setAttribute("type", "text");
           inputNome.setAttribute("class", "field alterarInput");
-          inputNome.id = 'inputNome' + i.id;
+          inputNome.id = 'inputNomedi' + i.id;
           inputNome.value = i.nome;
 
           // adiciona o elemento no conteudo
@@ -839,7 +839,7 @@ const mostraDispensa = () => {
           nome.appendChild(inputNome);
 
           // cria o dom do elemento
-          domNome = document.querySelector('#inputNome' + i.id)
+          domNome = document.querySelector('#inputNomedi' + i.id)
 
           // foca no elemento
           domNome.focus();
@@ -850,33 +850,33 @@ const mostraDispensa = () => {
           btnExcluir.setAttribute('id', "btnExcluir" + i.id);
           btnExcluir.setAttribute('class', 'button primary');
           // limpa o checkArea e adiciona o botao de exclusao
-          checkArea.innerHTML = '';
-          checkArea.appendChild(btnExcluir);
+          validade.innerHTML = '';
+          validade.appendChild(btnExcluir);
 
           // se tiver blur salva a alteracao
           domNome.addEventListener('blur', () => {
             // remove o botao de excluir depois de 10 milisegundos       
             var delayInMilliseconds = 2;
             setTimeout(function () {
-              checkArea.innerHTML = '';
-              checkArea.appendChild(checkbox);
+              validade.innerHTML = '';
+              validade.innerHTML = i.validade;
             }, delayInMilliseconds);
 
             podeEditar = true; // permite uma nova alteracao
             // altera o elemento no vetor
-            let pos = produtosCompras.findIndex((obj) => obj.id == i.id);
-            produtosCompras[pos].nome = inputNome.value;
+            let pos = dispensa.findIndex((obj) => obj.id == i.id);
+            dispensa[pos].nome = inputNome.value;
             nome.innerHTML = i.nome; // altera na visualizacao
 
             // salva a alteracao
-            localStorage.setItem('produtosCompras', JSON.stringify(produtosCompras));
+            localStorage.setItem('dispensa', JSON.stringify(dispensa));
 
             // chama a exclusao
             btnExcluir.onclick = () => {
               // cria uma nova copia do vetor sem o objeto excluido
-              produtosCompras = produtosCompras.filter((obj) => obj.id != i.id);
+              dispensa = dispensa.filter((obj) => obj.id != i.id);
               // salva a alteracao
-              localStorage.setItem('produtosCompras', JSON.stringify(produtosCompras));
+              localStorage.setItem('dispensa', JSON.stringify(dispensa));
               tr.setAttribute('class', 'hidden');
 
               // tira o foco do objeto removido
@@ -898,7 +898,7 @@ const mostraDispensa = () => {
           // define os atributos do elemento
           inputQtd.setAttribute("type", "number");
           inputQtd.setAttribute("class", "field alterarInput");
-          inputQtd.id = 'inputQtd' + i.id;
+          inputQtd.id = 'inputQtddi' + i.id;
           inputQtd.value = i.qtd;
 
           // adiciona o elemento no conteudo
@@ -906,7 +906,7 @@ const mostraDispensa = () => {
           qtd.appendChild(inputQtd);
 
           // cria o dom do elemento
-          domQtd = document.querySelector('#inputQtd' + i.id)
+          domQtd = document.querySelector('#inputQtddi' + i.id)
 
           // foca no elemento
           domQtd.focus();
@@ -917,33 +917,33 @@ const mostraDispensa = () => {
           btnExcluir.setAttribute('id', "btnExcluir" + i.id);
           btnExcluir.setAttribute('class', 'button primary');
           // limpa o checkArea e adiciona o botao de exclusao
-          checkArea.innerHTML = '';
-          checkArea.appendChild(btnExcluir);
+          validade.innerHTML = '';
+          validade.appendChild(btnExcluir);
 
           // se tiver blur salva a alteracao
           domQtd.addEventListener('blur', () => {
             // remove o botao de excluir depois de 10 milisegundos       
             var delayInMilliseconds = 2;
             setTimeout(function () {
-              checkArea.innerHTML = '';
-              checkArea.appendChild(checkbox);
+              validade.innerHTML = '';
+              validade.innerHTML = i.validade;
             }, delayInMilliseconds);
 
             podeEditar = true; // permite uma nova alteracao
             // altera o elemento no vetor
-            let pos = produtosCompras.findIndex((obj) => obj.id == i.id);
-            produtosCompras[pos].qtd = inputQtd.value;
+            let pos = dispensa.findIndex((obj) => obj.id == i.id);
+            dispensa[pos].qtd = inputQtd.value;
             qtd.innerHTML = i.qtd; // altera na visualizacao
 
             // salva a alteracao
-            localStorage.setItem('produtosCompras', JSON.stringify(produtosCompras));
+            localStorage.setItem('dispensa', JSON.stringify(dispensa));
 
             // chama a exclusao
             btnExcluir.onclick = () => {
               // cria uma nova copia do vetor sem o objeto excluido
-              produtosCompras = produtosCompras.filter((obj) => obj.id != i.id);
+              dispensa = dispensa.filter((obj) => obj.id != i.id);
               // salva a alteracao
-              localStorage.setItem('produtosCompras', JSON.stringify(produtosCompras));
+              localStorage.setItem('dispensa', JSON.stringify(dispensa));
               tr.setAttribute('class', 'hidden');
 
               // tira o foco do objeto removido
@@ -967,7 +967,7 @@ const mostraDispensa = () => {
           // define os atributos do elemento
           inputUnidade.setAttribute("type", "text");
           inputUnidade.setAttribute("class", "field alterarInput");
-          inputUnidade.id = 'inputUnidade' + i.id;
+          inputUnidade.id = 'inputUnidadedi' + i.id;
           inputUnidade.value = i.unidade;
 
           // adiciona o elemento no conteudo
@@ -975,7 +975,7 @@ const mostraDispensa = () => {
           unidade.appendChild(inputUnidade);
 
           // cria o dom do elemento
-          domUnidade = document.querySelector('#inputUnidade' + i.id)
+          domUnidade = document.querySelector('#inputUnidadedi' + i.id)
 
           // foca no elemento
           domUnidade.focus();
@@ -986,33 +986,33 @@ const mostraDispensa = () => {
           btnExcluir.setAttribute('id', "btnExcluir" + i.id);
           btnExcluir.setAttribute('class', 'button primary');
           // limpa o checkArea e adiciona o botao de exclusao
-          checkArea.innerHTML = '';
-          checkArea.appendChild(btnExcluir);
+          validade.innerHTML = '';
+          validade.appendChild(btnExcluir);
 
           // se tiver blur salva a alteracao
           domUnidade.addEventListener('blur', () => {
             // remove o botao de excluir depois de 10 milisegundos       
             var delayInMilliseconds = 2;
             setTimeout(function () {
-              checkArea.innerHTML = '';
-              checkArea.appendChild(checkbox);
+              validade.innerHTML = '';
+              validade.innerHTML = i.validade;
             }, delayInMilliseconds);
 
             podeEditar = true; // permite uma nova alteracao
             // altera o elemento no vetor
-            let pos = produtosCompras.findIndex((obj) => obj.id == i.id);
-            produtosCompras[pos].unidade = inputUnidade.value;
+            let pos = dispensa.findIndex((obj) => obj.id == i.id);
+            dispensa[pos].unidade = inputUnidade.value;
             unidade.innerHTML = i.unidade; // altera na visualizacao
 
             // salva a alteracao
-            localStorage.setItem('produtosCompras', JSON.stringify(produtosCompras));
+            localStorage.setItem('dispensa', JSON.stringify(dispensa));
 
             // chama a exclusao
             btnExcluir.onclick = () => {
               // cria uma nova copia do vetor sem o objeto excluido
-              produtosCompras = produtosCompras.filter((obj) => obj.id != i.id);
+              dispensa = dispensa.filter((obj) => obj.id != i.id);
               // salva a alteracao
-              localStorage.setItem('produtosCompras', JSON.stringify(produtosCompras));
+              localStorage.setItem('dispensa', JSON.stringify(dispensa));
               tr.setAttribute('class', 'hidden');
 
               // tira o foco do objeto removido
@@ -1024,6 +1024,75 @@ const mostraDispensa = () => {
         } // fim do if pode editar
       }; // fim do segundo click
     }; // fim do unidade.onclick()
+
+    // alterar validade ou excluir linha
+    validade.onclick = () => {
+      validade.onclick = () => {
+        if (podeEditar) {
+          // determina a flag como false para evitar outras alteracoes
+          podeEditar = false;
+          // cria o elemento para edicao
+          var inputValidade = document.createElement("INPUT");
+          // define os atributos do elemento
+          inputValidade.setAttribute("type", "date");
+          inputValidade.setAttribute("class", "field alterarInput");
+          inputValidade.id = 'inputValidadedi' + i.id;
+          inputValidade.value = i.validade;
+
+          // adiciona o elemento no conteudo
+          validade.innerHTML = '';
+          validade.appendChild(inputValidade);
+
+          // cria o dom do elemento
+          domValidade = document.querySelector('#inputValidadedi' + i.id)
+
+          // foca no elemento
+          domValidade.focus();
+
+          // cria o botao de excluir do elemento
+          let btnExcluir = document.createElement('BUTTON');
+          btnExcluir.innerHTML = '<img src="imagens\\delete.png" />';
+          btnExcluir.setAttribute('id', "btnExcluir" + i.id);
+          btnExcluir.setAttribute('class', 'button primary');
+          // limpa um campo e adiciona o botao de exclusao
+          unidade.innerHTML = '';
+          unidade.appendChild(btnExcluir);
+
+          // se tiver blur salva a alteracao
+          domValidade.addEventListener('blur', () => {
+            // remove o botao de excluir e restaura o campo depois de 10 milisegundos       
+            var delayInMilliseconds = 2;
+            setTimeout(function () {
+              unidade.innerHTML = '';
+              unidade.innerHTML = i.unidade;
+            }, delayInMilliseconds);
+
+            podeEditar = true; // permite uma nova alteracao
+            // altera o elemento no vetor
+            let pos = dispensa.findIndex((obj) => obj.id == i.id);
+            dispensa[pos].validade = inputValidade.value;
+            validade.innerHTML = convertDate(i.validade); // altera na visualizacao
+
+            // salva a alteracao
+            localStorage.setItem('dispensa', JSON.stringify(dispensa));
+
+            // chama a exclusao
+            btnExcluir.onclick = () => {
+              // cria uma nova copia do vetor sem o objeto excluido
+              dispensa = dispensa.filter((obj) => obj.id != i.id);
+              // salva a alteracao
+              localStorage.setItem('dispensa', JSON.stringify(dispensa));
+              tr.setAttribute('class', 'hidden');
+
+              // tira o foco do objeto removido
+              domValidade.blur();
+            } // fim do btnExcluir
+
+          });
+
+        } // fim do if pode editar
+      }; // fim do segundo click
+    }; // fim do validade.onclick()
 
     // adiciona a linha da tabela ao conteudo
     di.appendChild(tr);
@@ -1047,4 +1116,11 @@ const desabilitaCampos = () => {
 const habilitaCampo = (idCampo) => {
   let elemento = document.getElementById(idCampo).style;
   elemento.visibility = 'visible'; elemento.position = 'relative';
+}
+
+const convertDate = (date) => {
+ //date = 'yyyy-mm-dd';
+  let dateSplit = date.split('-');
+  let newdate = dateSplit[2]+"/"+dateSplit[1]+"/"+dateSplit[0].slice(2,4);
+  return newdate;
 }
