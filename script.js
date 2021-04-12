@@ -433,7 +433,11 @@ const mostraProdutosCompra = () => {
     tr.appendChild(unidade);
     tr.appendChild(checkArea);
 
-    //alterar nome
+    tr.onclick = () => {
+
+    }
+
+    //alterar nome ou excluir linha
     nome.onclick = () => {
       nome.onclick = () => {
         if (podeEditar) {
@@ -452,29 +456,55 @@ const mostraProdutosCompra = () => {
           nome.appendChild(inputNome);
 
           // cria o dom do elemento
-          domQtd = document.querySelector('#inputNome' + i.id)
-          
+          domNome = document.querySelector('#inputNome' + i.id)
+
           // foca no elemento
-          domQtd.focus();
+          domNome.focus();
+
+          // cria o botao de excluir do elemento
+          let btnExcluir = document.createElement('BUTTON');
+          btnExcluir.innerHTML = '<img src="imagens\\delete.png" />';
+          btnExcluir.setAttribute('id', "btnExcluir" + i.id);
+          btnExcluir.setAttribute('class', 'button primary');
+          // limpa o checkArea e adiciona o botao de exclusao
+          checkArea.innerHTML = '';
+          checkArea.appendChild(btnExcluir);
 
           // se tiver blur salva a alteracao
-          domQtd.addEventListener('blur', () => {
+          domNome.addEventListener('blur', () => {
+            // remove o botao de excluir depois de 10 milisegundos       
+            var delayInMilliseconds = 2;
+            setTimeout(function () {
+              checkArea.innerHTML = '';
+              checkArea.appendChild(checkbox);
+            }, delayInMilliseconds);
+
             podeEditar = true; // permite uma nova alteracao
             // altera o elemento no vetor
-            let pos = produtosCompras.findIndex((obj) => obj.id==i.id);
+            let pos = produtosCompras.findIndex((obj) => obj.id == i.id);
             produtosCompras[pos].nome = inputNome.value;
             nome.innerHTML = i.nome; // altera na visualizacao
 
             // salva a alteracao
             localStorage.setItem('produtosCompras', JSON.stringify(produtosCompras));
 
-          });
+            // chama a exclusao
+            btnExcluir.onclick = () => {
+              // cria uma nova copia do vetor sem o objeto excluido
+              produtosCompras = produtosCompras.filter((obj) => obj.id != i.id);
+              // salva a alteracao
+              localStorage.setItem('produtosCompras', JSON.stringify(produtosCompras));
+              tr.setAttribute('class', 'hidden');
 
+              // tira o foco do objeto removido
+              domNome.blur();
+            } // fim do btnExcluir
+          });
         } // fim do if pode editar
       }; // fim do segundo click
     }; // fim do nome.onclick()
 
-    // alterar qtd
+    // alterar qtd ou excluir linha
     qtd.onclick = () => {
       qtd.onclick = () => {
         if (podeEditar) {
@@ -494,20 +524,48 @@ const mostraProdutosCompra = () => {
 
           // cria o dom do elemento
           domQtd = document.querySelector('#inputQtd' + i.id)
-          
+
           // foca no elemento
           domQtd.focus();
 
+          // cria o botao de excluir do elemento
+          let btnExcluir = document.createElement('BUTTON');
+          btnExcluir.innerHTML = '<img src="imagens\\delete.png" />';
+          btnExcluir.setAttribute('id', "btnExcluir" + i.id);
+          btnExcluir.setAttribute('class', 'button primary');
+          // limpa o checkArea e adiciona o botao de exclusao
+          checkArea.innerHTML = '';
+          checkArea.appendChild(btnExcluir);
+
           // se tiver blur salva a alteracao
           domQtd.addEventListener('blur', () => {
+            // remove o botao de excluir depois de 10 milisegundos       
+            var delayInMilliseconds = 2;
+            setTimeout(function () {
+              checkArea.innerHTML = '';
+              checkArea.appendChild(checkbox);
+            }, delayInMilliseconds);
+
             podeEditar = true; // permite uma nova alteracao
             // altera o elemento no vetor
-            let pos = produtosCompras.findIndex((obj) => obj.id==i.id);
+            let pos = produtosCompras.findIndex((obj) => obj.id == i.id);
             produtosCompras[pos].qtd = inputQtd.value;
             qtd.innerHTML = i.qtd; // altera na visualizacao
 
             // salva a alteracao
             localStorage.setItem('produtosCompras', JSON.stringify(produtosCompras));
+
+            // chama a exclusao
+            btnExcluir.onclick = () => {
+              // cria uma nova copia do vetor sem o objeto excluido
+              produtosCompras = produtosCompras.filter((obj) => obj.id != i.id);
+              // salva a alteracao
+              localStorage.setItem('produtosCompras', JSON.stringify(produtosCompras));
+              tr.setAttribute('class', 'hidden');
+
+              // tira o foco do objeto removido
+              domQtd.blur();
+            } // fim do btnExcluir
 
           });
 
@@ -515,7 +573,7 @@ const mostraProdutosCompra = () => {
       }; // fim do segundo click
     }; // fim do qtd.onclick()
 
-    // alterar unidade
+    // alterar unidade ou excluir linha
     unidade.onclick = () => {
       unidade.onclick = () => {
         if (podeEditar) {
@@ -535,20 +593,48 @@ const mostraProdutosCompra = () => {
 
           // cria o dom do elemento
           domUnidade = document.querySelector('#inputUnidade' + i.id)
-          
+
           // foca no elemento
           domUnidade.focus();
 
+          // cria o botao de excluir do elemento
+          let btnExcluir = document.createElement('BUTTON');
+          btnExcluir.innerHTML = '<img src="imagens\\delete.png" />';
+          btnExcluir.setAttribute('id', "btnExcluir" + i.id);
+          btnExcluir.setAttribute('class', 'button primary');
+          // limpa o checkArea e adiciona o botao de exclusao
+          checkArea.innerHTML = '';
+          checkArea.appendChild(btnExcluir);
+
           // se tiver blur salva a alteracao
           domUnidade.addEventListener('blur', () => {
+            // remove o botao de excluir depois de 10 milisegundos       
+            var delayInMilliseconds = 2;
+            setTimeout(function () {
+              checkArea.innerHTML = '';
+              checkArea.appendChild(checkbox);
+            }, delayInMilliseconds);
+
             podeEditar = true; // permite uma nova alteracao
             // altera o elemento no vetor
-            let pos = produtosCompras.findIndex((obj) => obj.id==i.id);
+            let pos = produtosCompras.findIndex((obj) => obj.id == i.id);
             produtosCompras[pos].unidade = inputUnidade.value;
             unidade.innerHTML = i.unidade; // altera na visualizacao
 
             // salva a alteracao
             localStorage.setItem('produtosCompras', JSON.stringify(produtosCompras));
+
+            // chama a exclusao
+            btnExcluir.onclick = () => {
+              // cria uma nova copia do vetor sem o objeto excluido
+              produtosCompras = produtosCompras.filter((obj) => obj.id != i.id);
+              // salva a alteracao
+              localStorage.setItem('produtosCompras', JSON.stringify(produtosCompras));
+              tr.setAttribute('class', 'hidden');
+
+              // tira o foco do objeto removido
+              domUnidade.blur();
+            } // fim do btnExcluir
 
           });
 
@@ -561,10 +647,6 @@ const mostraProdutosCompra = () => {
 
   }); // fim do for
 }; // fim do mostraProdutosCompra
-
-const alterarProdutoCompra = (idLista,id) => {
-  
-}; 
 
 const desabilitaCampos = () => {
   // esconde campos opcionais
