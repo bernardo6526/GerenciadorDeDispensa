@@ -16,6 +16,8 @@ onload = () => {
   if (lc) listasDeCompras = lc;
   const pc = JSON.parse(localStorage.getItem('produtosCompras'));
   if (pc) produtosCompras = pc;
+  const di = JSON.parse(localStorage.getItem('dispensa'));
+  if (di) dispensa = di;
 
   // cria um objeto com as abas
   let tabs = document.querySelectorAll('.navBar .tab');
@@ -43,6 +45,8 @@ onload = () => {
 
   // carrega os vetores
   mostraListasCompras();
+  mostraProdutosCompra();
+  mostraDispensa();
 
   // NavBar ---------------------------------------------
   document.querySelector('#tab1').onclick = () => {
@@ -226,6 +230,121 @@ onload = () => {
     };
   }; // fim Formulario add produto para compra
 
+
+   // Formulario add produto para dispensa ---------------------------------------------
+   document.querySelector('#addDispensa').onclick = () => {
+    // ativa a tela de formulario
+    ativa('formulario');
+
+    // foca no campo
+    document.querySelector('#nome').focus();
+
+    // esconde a barra de navegacao
+    let nav = document.getElementById('nav').style;
+    nav.visibility = 'hidden';
+
+    // muda o titulo do formulario
+    let lblNome = document.querySelector('#lblNome');
+    lblNome.innerHTML = 'Adicionar na Dispensa';
+
+    // muda o nome do item do formulario
+    let lblItem = document.querySelector('#lblItem');
+    lblItem.innerHTML = 'Nome do Item:';
+
+    // esconde campos desnecessarios
+    desabilitaCampos();
+
+    // habilita campos necessarios
+    habilitaCampo('divQtd');
+    habilitaCampo('divUnidade');
+    habilitaCampo('divValidade');
+
+
+    // evento de inclusao
+    document.querySelector('#btnInc').onclick = () => {
+      // cria os objetos correspondentes aos campos do formulario
+      let inputNome = document.getElementById('nome');
+      let inputQtd = document.getElementById('qtd');
+      let inputUnidade = document.getElementById('unidade');
+      let inputValidade = document.getElementById('validade');
+
+      // torna vermelho o campo com o valor faltando 
+      //ou remove o vermelho do campo com valor preenchido
+      if (inputNome.value == '') inputNome.style.borderColor = '#f00';
+      else inputNome.style.borderColor = '#8f9799';
+
+      if (inputQtd.value == '') inputQtd.style.borderColor = '#f00';
+      else inputQtd.style.borderColor = '#8f9799';
+
+      if (inputUnidade.value == '') inputUnidade.style.borderColor = '#f00';
+      else inputUnidade.style.borderColor = '#8f9799';
+
+      if (inputValidade.value == '') inputValidade.style.borderColor = '#f00';
+      else inputValidade.style.borderColor = '#8f9799';
+
+      // se os campos nao estiverem vazios
+      if (inputNome.value != '' && inputQtd.value != ''
+       && inputUnidade.value != '' && inputValidade.value != '') {
+        // insere o elemento
+        dispensa.push({
+          idLista: idLista,
+          id: Math.random().toString().replace('0.', ''),
+          nome: inputNome.value,
+          qtd: inputQtd.value,
+          unidade: inputUnidade.value,
+          validade: inputValidade.value
+        });
+        // atualiza a lista
+        mostraDispensa();
+        // salva localmente
+        localStorage.setItem('dispensa', JSON.stringify(dispensa));
+
+        // limpa o valor dos campos
+        inputNome.value = '';
+        inputQtd.value = '';
+        inputUnidade.value = '';
+        inputValidade.value = '';
+
+        // volta a cor dos fields para o normal
+        inputNome.style.borderColor = '#8f9799';
+        inputQtd.style.borderColor = '#8f9799';
+        inputUnidade.style.borderColor = '#8f9799';
+        inputValidade.style.borderColor = '#8f9799';
+
+        // volta para tela anterior         
+        ativa('tela2');
+
+        // mostra a barra de navegacao
+        nav.visibility = 'visible';
+      }
+    };
+
+    // evento de cancelar
+    document.querySelector('#btnCanc').onclick = () => {
+      let inputNome = document.getElementById('nome');
+      let inputQtd = document.getElementById('qtd');
+      let inputUnidade = document.getElementById('unidade');
+      let inputValidade = document.getElementById('validade');
+
+      // limpa o valor dos campos
+      inputNome.value = '';
+      inputQtd.value = '';
+      inputUnidade.value = '';
+      inputValidade.value = '';
+
+      // volta a cor dos fields para o normal
+      inputNome.style.borderColor = '#8f9799';
+      inputQtd.style.borderColor = '#8f9799';
+      inputUnidade.style.borderColor = '#8f9799';
+      inputValidade.style.borderColor = '#8f9799';
+
+      // volta para tela anterior         
+      ativa('tela2');
+
+      // mostra a barra de navegacao
+      nav.visibility = 'visible';
+    };
+  }; // fim Formulario add produto para dispensa
 
 }; // fim onload
 
@@ -411,8 +530,8 @@ const mostraProdutosCompra = () => {
     // limpa os checkbox
     produtos.forEach((i) => {
       i.check = false;
-      document.getElementById("check"+i.id).checked = i.check;
-    });   
+      document.getElementById("check" + i.id).checked = i.check;
+    });
   };
 
   // cria o objeto dom que ira carregar os produtos
@@ -670,6 +789,244 @@ const mostraProdutosCompra = () => {
 
     // adiciona a linha da tabela ao conteudo
     pc.appendChild(tr);
+
+  }); // fim do for
+}; // fim do mostraProdutosCompra
+
+const mostraDispensa = () => {
+  // pega o conteudo que sera preenchido
+  const di = document.querySelector('#dispensa');
+  di.innerHTML = '';
+  // itera o vetor de dispensa
+  dispensa.forEach((i) => {
+    // cria a linha da tabela
+    let tr = document.createElement('tr');
+
+    // cria e edita os dados da linha
+    let nome = document.createElement('td');
+    nome.innerHTML = i.nome;
+    let qtd = document.createElement('td');
+    qtd.innerHTML = i.qtd;
+    let unidade = document.createElement('td');
+    unidade.innerHTML = i.unidade;
+    let validade = document.createElement('td');
+    if(i.validade == null)validade.innerHTML = "dd/mm/aaaa";
+    else validade.innerHTML = i.validade;
+
+
+    // adiciona os dados a linha
+    tr.appendChild(nome);
+    tr.appendChild(qtd);
+    tr.appendChild(unidade);
+    tr.appendChild(validade);
+
+    //alterar nome ou excluir linha
+    nome.onclick = () => {
+      nome.onclick = () => {
+        if (podeEditar) {
+          // determina a flag como false para evitar outras alteracoes
+          podeEditar = false;
+          // cria o elemento para edicao
+          var inputNome = document.createElement("INPUT");
+          // define os atributos do elemento
+          inputNome.setAttribute("type", "text");
+          inputNome.setAttribute("class", "field alterarInput");
+          inputNome.id = 'inputNome' + i.id;
+          inputNome.value = i.nome;
+
+          // adiciona o elemento no conteudo
+          nome.innerHTML = '';
+          nome.appendChild(inputNome);
+
+          // cria o dom do elemento
+          domNome = document.querySelector('#inputNome' + i.id)
+
+          // foca no elemento
+          domNome.focus();
+
+          // cria o botao de excluir do elemento
+          let btnExcluir = document.createElement('BUTTON');
+          btnExcluir.innerHTML = '<img src="imagens\\delete.png" />';
+          btnExcluir.setAttribute('id', "btnExcluir" + i.id);
+          btnExcluir.setAttribute('class', 'button primary');
+          // limpa o checkArea e adiciona o botao de exclusao
+          checkArea.innerHTML = '';
+          checkArea.appendChild(btnExcluir);
+
+          // se tiver blur salva a alteracao
+          domNome.addEventListener('blur', () => {
+            // remove o botao de excluir depois de 10 milisegundos       
+            var delayInMilliseconds = 2;
+            setTimeout(function () {
+              checkArea.innerHTML = '';
+              checkArea.appendChild(checkbox);
+            }, delayInMilliseconds);
+
+            podeEditar = true; // permite uma nova alteracao
+            // altera o elemento no vetor
+            let pos = produtosCompras.findIndex((obj) => obj.id == i.id);
+            produtosCompras[pos].nome = inputNome.value;
+            nome.innerHTML = i.nome; // altera na visualizacao
+
+            // salva a alteracao
+            localStorage.setItem('produtosCompras', JSON.stringify(produtosCompras));
+
+            // chama a exclusao
+            btnExcluir.onclick = () => {
+              // cria uma nova copia do vetor sem o objeto excluido
+              produtosCompras = produtosCompras.filter((obj) => obj.id != i.id);
+              // salva a alteracao
+              localStorage.setItem('produtosCompras', JSON.stringify(produtosCompras));
+              tr.setAttribute('class', 'hidden');
+
+              // tira o foco do objeto removido
+              domNome.blur();
+            } // fim do btnExcluir
+          });
+        } // fim do if pode editar
+      }; // fim do segundo click
+    }; // fim do nome.onclick()
+
+    // alterar qtd ou excluir linha
+    qtd.onclick = () => {
+      qtd.onclick = () => {
+        if (podeEditar) {
+          // determina a flag como false para evitar outras alteracoes
+          podeEditar = false;
+          // cria o elemento para edicao
+          var inputQtd = document.createElement("INPUT");
+          // define os atributos do elemento
+          inputQtd.setAttribute("type", "number");
+          inputQtd.setAttribute("class", "field alterarInput");
+          inputQtd.id = 'inputQtd' + i.id;
+          inputQtd.value = i.qtd;
+
+          // adiciona o elemento no conteudo
+          qtd.innerHTML = '';
+          qtd.appendChild(inputQtd);
+
+          // cria o dom do elemento
+          domQtd = document.querySelector('#inputQtd' + i.id)
+
+          // foca no elemento
+          domQtd.focus();
+
+          // cria o botao de excluir do elemento
+          let btnExcluir = document.createElement('BUTTON');
+          btnExcluir.innerHTML = '<img src="imagens\\delete.png" />';
+          btnExcluir.setAttribute('id', "btnExcluir" + i.id);
+          btnExcluir.setAttribute('class', 'button primary');
+          // limpa o checkArea e adiciona o botao de exclusao
+          checkArea.innerHTML = '';
+          checkArea.appendChild(btnExcluir);
+
+          // se tiver blur salva a alteracao
+          domQtd.addEventListener('blur', () => {
+            // remove o botao de excluir depois de 10 milisegundos       
+            var delayInMilliseconds = 2;
+            setTimeout(function () {
+              checkArea.innerHTML = '';
+              checkArea.appendChild(checkbox);
+            }, delayInMilliseconds);
+
+            podeEditar = true; // permite uma nova alteracao
+            // altera o elemento no vetor
+            let pos = produtosCompras.findIndex((obj) => obj.id == i.id);
+            produtosCompras[pos].qtd = inputQtd.value;
+            qtd.innerHTML = i.qtd; // altera na visualizacao
+
+            // salva a alteracao
+            localStorage.setItem('produtosCompras', JSON.stringify(produtosCompras));
+
+            // chama a exclusao
+            btnExcluir.onclick = () => {
+              // cria uma nova copia do vetor sem o objeto excluido
+              produtosCompras = produtosCompras.filter((obj) => obj.id != i.id);
+              // salva a alteracao
+              localStorage.setItem('produtosCompras', JSON.stringify(produtosCompras));
+              tr.setAttribute('class', 'hidden');
+
+              // tira o foco do objeto removido
+              domQtd.blur();
+            } // fim do btnExcluir
+
+          });
+
+        } // fim do if pode editar
+      }; // fim do segundo click
+    }; // fim do qtd.onclick()
+
+    // alterar unidade ou excluir linha
+    unidade.onclick = () => {
+      unidade.onclick = () => {
+        if (podeEditar) {
+          // determina a flag como false para evitar outras alteracoes
+          podeEditar = false;
+          // cria o elemento para edicao
+          var inputUnidade = document.createElement("INPUT");
+          // define os atributos do elemento
+          inputUnidade.setAttribute("type", "text");
+          inputUnidade.setAttribute("class", "field alterarInput");
+          inputUnidade.id = 'inputUnidade' + i.id;
+          inputUnidade.value = i.unidade;
+
+          // adiciona o elemento no conteudo
+          unidade.innerHTML = '';
+          unidade.appendChild(inputUnidade);
+
+          // cria o dom do elemento
+          domUnidade = document.querySelector('#inputUnidade' + i.id)
+
+          // foca no elemento
+          domUnidade.focus();
+
+          // cria o botao de excluir do elemento
+          let btnExcluir = document.createElement('BUTTON');
+          btnExcluir.innerHTML = '<img src="imagens\\delete.png" />';
+          btnExcluir.setAttribute('id', "btnExcluir" + i.id);
+          btnExcluir.setAttribute('class', 'button primary');
+          // limpa o checkArea e adiciona o botao de exclusao
+          checkArea.innerHTML = '';
+          checkArea.appendChild(btnExcluir);
+
+          // se tiver blur salva a alteracao
+          domUnidade.addEventListener('blur', () => {
+            // remove o botao de excluir depois de 10 milisegundos       
+            var delayInMilliseconds = 2;
+            setTimeout(function () {
+              checkArea.innerHTML = '';
+              checkArea.appendChild(checkbox);
+            }, delayInMilliseconds);
+
+            podeEditar = true; // permite uma nova alteracao
+            // altera o elemento no vetor
+            let pos = produtosCompras.findIndex((obj) => obj.id == i.id);
+            produtosCompras[pos].unidade = inputUnidade.value;
+            unidade.innerHTML = i.unidade; // altera na visualizacao
+
+            // salva a alteracao
+            localStorage.setItem('produtosCompras', JSON.stringify(produtosCompras));
+
+            // chama a exclusao
+            btnExcluir.onclick = () => {
+              // cria uma nova copia do vetor sem o objeto excluido
+              produtosCompras = produtosCompras.filter((obj) => obj.id != i.id);
+              // salva a alteracao
+              localStorage.setItem('produtosCompras', JSON.stringify(produtosCompras));
+              tr.setAttribute('class', 'hidden');
+
+              // tira o foco do objeto removido
+              domUnidade.blur();
+            } // fim do btnExcluir
+
+          });
+
+        } // fim do if pode editar
+      }; // fim do segundo click
+    }; // fim do unidade.onclick()
+
+    // adiciona a linha da tabela ao conteudo
+    di.appendChild(tr);
 
   }); // fim do for
 }; // fim do mostraProdutosCompra
