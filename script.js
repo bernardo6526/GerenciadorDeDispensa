@@ -8,10 +8,12 @@ let dispensa = [];
 
 // flag para controlar as edicoes
 let podeEditar = true;
+console.log("podeEditar:" + podeEditar);
 
 
 onload = () => {
   // carrega os recursos salvos
+  console.log("CARREGUEI");
   const lc = JSON.parse(localStorage.getItem('listasDeCompras'));
   if (lc) listasDeCompras = lc;
   const pc = JSON.parse(localStorage.getItem('produtosCompras'));
@@ -231,8 +233,8 @@ onload = () => {
   }; // fim Formulario add produto para compra
 
 
-   // Formulario add produto para dispensa ---------------------------------------------
-   document.querySelector('#addDispensa').onclick = () => {
+  // Formulario add produto para dispensa ---------------------------------------------
+  document.querySelector('#addDispensa').onclick = () => {
     // ativa a tela de formulario
     ativa('formulario');
 
@@ -284,7 +286,7 @@ onload = () => {
 
       // se os campos nao estiverem vazios
       if (inputNome.value != '' && inputQtd.value != ''
-       && inputUnidade.value != '' && inputValidade.value != '') {
+        && inputUnidade.value != '' && inputValidade.value != '') {
         // insere o elemento
         dispensa.push({
           idLista: idLista,
@@ -522,16 +524,29 @@ const mostraProdutosCompra = () => {
   enviarCompra.onclick = () => {
     // filtra os produtos marcados
     let addDispensa = produtos.filter((obj) => obj.check == true);
+    // preenche o addDispensa com as datas
+    addDispensa.forEach((i) => {
+      i.validade = "yyyy-mm-dd";
+    });
     // adiciona ao vetor de dispensa
     dispensa = [...dispensa, ...addDispensa];
     // salva a alteracao
     localStorage.setItem('dispensa', JSON.stringify(dispensa));
+
+    // carrega os dados
+    mostraDispensa();
+
+    // redireciona para a tela da dispensa se houver produtos
+    if (dispensa.length > 0)
+      ativa('tela2');
 
     // limpa os checkbox
     produtos.forEach((i) => {
       i.check = false;
       document.getElementById("check" + i.id).checked = i.check;
     });
+
+    console.log("Redirect");
   };
 
   // cria o objeto dom que ira carregar os produtos
@@ -588,6 +603,7 @@ const mostraProdutosCompra = () => {
         if (podeEditar) {
           // determina a flag como false para evitar outras alteracoes
           podeEditar = false;
+          console.log("podeEditar:" + podeEditar);
           // cria o elemento para edicao
           var inputNome = document.createElement("INPUT");
           // define os atributos do elemento
@@ -624,7 +640,8 @@ const mostraProdutosCompra = () => {
               checkArea.appendChild(checkbox);
             }, delayInMilliseconds);
 
-            podeEditar = true; // permite uma nova alteracao
+            podeEditar = true;
+            console.log("podeEditar:" + podeEditar); // permite uma nova alteracao
             // altera o elemento no vetor
             let pos = produtosCompras.findIndex((obj) => obj.id == i.id);
             produtosCompras[pos].nome = inputNome.value;
@@ -643,6 +660,10 @@ const mostraProdutosCompra = () => {
 
               // tira o foco do objeto removido
               domNome.blur();
+
+              podeEditar = true;
+              console.log("podeEditar:" + podeEditar); // permite uma nova alteracao
+
             } // fim do btnExcluir
           });
         } // fim do if pode editar
@@ -655,6 +676,7 @@ const mostraProdutosCompra = () => {
         if (podeEditar) {
           // determina a flag como false para evitar outras alteracoes
           podeEditar = false;
+          console.log("podeEditar:" + podeEditar);
           // cria o elemento para edicao
           var inputQtd = document.createElement("INPUT");
           // define os atributos do elemento
@@ -691,7 +713,8 @@ const mostraProdutosCompra = () => {
               checkArea.appendChild(checkbox);
             }, delayInMilliseconds);
 
-            podeEditar = true; // permite uma nova alteracao
+            podeEditar = true;
+            console.log("podeEditar:" + podeEditar); // permite uma nova alteracao
             // altera o elemento no vetor
             let pos = produtosCompras.findIndex((obj) => obj.id == i.id);
             produtosCompras[pos].qtd = inputQtd.value;
@@ -710,6 +733,9 @@ const mostraProdutosCompra = () => {
 
               // tira o foco do objeto removido
               domQtd.blur();
+
+              podeEditar = true;
+              console.log("podeEditar:" + podeEditar); // permite uma nova alteracao
             } // fim do btnExcluir
 
           });
@@ -724,6 +750,7 @@ const mostraProdutosCompra = () => {
         if (podeEditar) {
           // determina a flag como false para evitar outras alteracoes
           podeEditar = false;
+          console.log("podeEditar:" + podeEditar);
           // cria o elemento para edicao
           var inputUnidade = document.createElement("INPUT");
           // define os atributos do elemento
@@ -760,7 +787,8 @@ const mostraProdutosCompra = () => {
               checkArea.appendChild(checkbox);
             }, delayInMilliseconds);
 
-            podeEditar = true; // permite uma nova alteracao
+            podeEditar = true;
+            console.log("podeEditar:" + podeEditar); // permite uma nova alteracao
             // altera o elemento no vetor
             let pos = produtosCompras.findIndex((obj) => obj.id == i.id);
             produtosCompras[pos].unidade = inputUnidade.value;
@@ -779,6 +807,9 @@ const mostraProdutosCompra = () => {
 
               // tira o foco do objeto removido
               domUnidade.blur();
+
+              podeEditar = true;
+              console.log("podeEditar:" + podeEditar); // permite uma nova alteracao
             } // fim do btnExcluir
 
           });
@@ -810,7 +841,7 @@ const mostraDispensa = () => {
     let unidade = document.createElement('td');
     unidade.innerHTML = i.unidade;
     let validade = document.createElement('td');
-    if(i.validade == null)validade.innerHTML = "dd/mm/aa";
+    if (i.validade == null) validade.innerHTML = "dd/mm/aa";
     else validade.innerHTML = convertDate(i.validade);
 
 
@@ -826,6 +857,7 @@ const mostraDispensa = () => {
         if (podeEditar) {
           // determina a flag como false para evitar outras alteracoes
           podeEditar = false;
+          console.log("podeEditar:" + podeEditar);
           // cria o elemento para edicao
           var inputNome = document.createElement("INPUT");
           // define os atributos do elemento
@@ -859,10 +891,13 @@ const mostraDispensa = () => {
             var delayInMilliseconds = 2;
             setTimeout(function () {
               validade.innerHTML = '';
-              validade.innerHTML = i.validade;
+              if (i.validade != null)
+                validade.innerHTML = convertDate(i.validade); // altera na visualizacao
+              else validade.innerHTML = convertDate('yyyy-mm-dd');
             }, delayInMilliseconds);
 
-            podeEditar = true; // permite uma nova alteracao
+            podeEditar = true;
+            console.log("podeEditar:" + podeEditar); // permite uma nova alteracao
             // altera o elemento no vetor
             let pos = dispensa.findIndex((obj) => obj.id == i.id);
             dispensa[pos].nome = inputNome.value;
@@ -881,6 +916,9 @@ const mostraDispensa = () => {
 
               // tira o foco do objeto removido
               domNome.blur();
+
+              podeEditar = true;
+              console.log("podeEditar:" + podeEditar); // permite uma nova alteracao
             } // fim do btnExcluir
           });
         } // fim do if pode editar
@@ -893,6 +931,7 @@ const mostraDispensa = () => {
         if (podeEditar) {
           // determina a flag como false para evitar outras alteracoes
           podeEditar = false;
+          console.log("podeEditar:" + podeEditar);
           // cria o elemento para edicao
           var inputQtd = document.createElement("INPUT");
           // define os atributos do elemento
@@ -926,10 +965,13 @@ const mostraDispensa = () => {
             var delayInMilliseconds = 2;
             setTimeout(function () {
               validade.innerHTML = '';
-              validade.innerHTML = i.validade;
+              if (i.validade != null)
+                validade.innerHTML = convertDate(i.validade); // altera na visualizacao
+              else validade.innerHTML = convertDate('yyyy-mm-dd');
             }, delayInMilliseconds);
 
-            podeEditar = true; // permite uma nova alteracao
+            podeEditar = true;
+            console.log("podeEditar:" + podeEditar); // permite uma nova alteracao
             // altera o elemento no vetor
             let pos = dispensa.findIndex((obj) => obj.id == i.id);
             dispensa[pos].qtd = inputQtd.value;
@@ -948,6 +990,9 @@ const mostraDispensa = () => {
 
               // tira o foco do objeto removido
               domQtd.blur();
+
+              podeEditar = true;
+              console.log("podeEditar:" + podeEditar); // permite uma nova alteracao
             } // fim do btnExcluir
 
           });
@@ -962,6 +1007,7 @@ const mostraDispensa = () => {
         if (podeEditar) {
           // determina a flag como false para evitar outras alteracoes
           podeEditar = false;
+          console.log("podeEditar:" + podeEditar);
           // cria o elemento para edicao
           var inputUnidade = document.createElement("INPUT");
           // define os atributos do elemento
@@ -995,10 +1041,13 @@ const mostraDispensa = () => {
             var delayInMilliseconds = 2;
             setTimeout(function () {
               validade.innerHTML = '';
-              validade.innerHTML = i.validade;
+              if (i.validade != null)
+                validade.innerHTML = convertDate(i.validade); // altera na visualizacao
+              else validade.innerHTML = convertDate('yyyy-mm-dd');
             }, delayInMilliseconds);
 
-            podeEditar = true; // permite uma nova alteracao
+            podeEditar = true;
+            console.log("podeEditar:" + podeEditar); // permite uma nova alteracao
             // altera o elemento no vetor
             let pos = dispensa.findIndex((obj) => obj.id == i.id);
             dispensa[pos].unidade = inputUnidade.value;
@@ -1017,6 +1066,10 @@ const mostraDispensa = () => {
 
               // tira o foco do objeto removido
               domUnidade.blur();
+
+              podeEditar = true;
+              console.log("podeEditar:" + podeEditar); // permite uma nova alteracao
+
             } // fim do btnExcluir
 
           });
@@ -1031,6 +1084,7 @@ const mostraDispensa = () => {
         if (podeEditar) {
           // determina a flag como false para evitar outras alteracoes
           podeEditar = false;
+          console.log("podeEditar:" + podeEditar);
           // cria o elemento para edicao
           var inputValidade = document.createElement("INPUT");
           // define os atributos do elemento
@@ -1038,6 +1092,8 @@ const mostraDispensa = () => {
           inputValidade.setAttribute("class", "field alterarInput");
           inputValidade.id = 'inputValidadedi' + i.id;
           inputValidade.value = i.validade;
+
+          console.log("VALIDADE 1075" + i.validade);
 
           // adiciona o elemento no conteudo
           validade.innerHTML = '';
@@ -1058,6 +1114,14 @@ const mostraDispensa = () => {
           unidade.innerHTML = '';
           unidade.appendChild(btnExcluir);
 
+          inputValidade.addEventListener('change', function () {
+            if (inputValidade.value != null)
+              i.validade = inputValidade.value;
+            console.log("VALIDADE 1099" + i.validade);
+            podeEditar = true;
+            console.log("podeEditar:" + podeEditar); // permite uma nova alteracao
+          });
+
           // se tiver blur salva a alteracao
           domValidade.addEventListener('blur', () => {
             // remove o botao de excluir e restaura o campo depois de 10 milisegundos       
@@ -1067,15 +1131,25 @@ const mostraDispensa = () => {
               unidade.innerHTML = i.unidade;
             }, delayInMilliseconds);
 
-            podeEditar = true; // permite uma nova alteracao
-            // altera o elemento no vetor
+            podeEditar = true;
+            console.log("podeEditar:" + podeEditar); // permite uma nova alteracao
+
+            // pega a pos do elemento no vetor
             let pos = dispensa.findIndex((obj) => obj.id == i.id);
-            dispensa[pos].validade = inputValidade.value;
-            validade.innerHTML = convertDate(i.validade); // altera na visualizacao
+            // se o elemento nao for nulo, valida a alteracao
+            if (inputValidade.value != null) {
+              // altera o elemento no vetor
+              //dispensa[pos].validade = inputValidade.value;
 
-            // salva a alteracao
-            localStorage.setItem('dispensa', JSON.stringify(dispensa));
+              // altera na visualizacao
+              validade.innerHTML = convertDate(i.validade);
 
+              // salva a alteracao
+              localStorage.setItem('dispensa', JSON.stringify(dispensa));
+            } else {
+              dispensa[pos].validade = 'yyyy-mm-dd';
+              validade.innerHTML = convertDate('yyyy-mm-dd');
+            }
             // chama a exclusao
             btnExcluir.onclick = () => {
               // cria uma nova copia do vetor sem o objeto excluido
@@ -1084,8 +1158,9 @@ const mostraDispensa = () => {
               localStorage.setItem('dispensa', JSON.stringify(dispensa));
               tr.setAttribute('class', 'hidden');
 
-              // tira o foco do objeto removido
-              domValidade.blur();
+              // garante a edicao apos a exclusao
+              podeEditar = true;
+              console.log("podeEditar:" + podeEditar);
             } // fim do btnExcluir
 
           });
@@ -1119,8 +1194,10 @@ const habilitaCampo = (idCampo) => {
 }
 
 const convertDate = (date) => {
- //date = 'yyyy-mm-dd';
+  //date = 'yyyy-mm-dd';
   let dateSplit = date.split('-');
-  let newdate = dateSplit[2]+"/"+dateSplit[1]+"/"+dateSplit[0].slice(2,4);
+  let newdate = dateSplit[2] + "/" + dateSplit[1] + "/" + dateSplit[0].slice(2, 4);
   return newdate;
 }
+
+navigator.serviceWorker.register('./dispensa-sw.js');
