@@ -42,7 +42,6 @@
         </button>
       </div>
       <ul class="list mt4" id="listaCompras">
-        <li>Compra do Mês</li>
       </ul>
     </div>
   </div>
@@ -51,7 +50,7 @@
     <div class="componentContent">
       <div class="componentHeader">
         <h1>Itens da Dispensa</h1>
-        <button id="addDispensa" class="button primary mvLeft3" for="tela4">
+        <button id="addDispensa" class="button primary mvLeft3">
           <img src="./imagens/plus1.png" />
         </button>
       </div>
@@ -79,7 +78,7 @@
   <div id="tela3" class="component hidden">
     <div class="componentContent">
       <div class="componentHeader">
-        <h1>Itens da Compra</h1>
+        <h1 id="tituloCompra"></h1>
         <button id="addProduto" class="button primary mvLeft3">
           <img src="./imagens/plus1.png" />
         </button>
@@ -94,7 +93,7 @@
           </tr>
         </table>
       </div>
-      <table class="table mt6">
+      <table id ="produtosCompra" class="table mt6">
         <tr>
           <td>Bolo</td>
           <td>1</td>
@@ -110,7 +109,7 @@
     </div>
   </div>
 
-  <div id="tela4" class="component hidden">
+  <div id="formulario" class="component hidden">
     <div class="componentHeader">
       <h1 class="componentTitle mvLeft2" id="lblNome"></h1>
     </div>

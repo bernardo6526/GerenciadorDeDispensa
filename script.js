@@ -1,10 +1,19 @@
-let listasDeCompras = [{ "id": "0", "nome": "Compra do Mês" }, { "id": "1", "nome": "Niver do Jairo" }];
-let produtosCompra = [];
+let listasDeCompras = [];
+
+let produtosCompras = [];
+let idLista = -1;
+
 let dispensa = [];
 
+
 onload = () => {
+  // carrega os recursos salvos
   const lc = JSON.parse(localStorage.getItem('listasDeCompras'));
   if (lc) listasDeCompras = lc;
+  const pc = JSON.parse(localStorage.getItem('produtosCompras'));
+  if (pc) produtosCompras = pc;
+
+  // cria um objeto com as abas
   let tabs = document.querySelectorAll('.navBar .tab');
 
   const mostra = (elem) => {
@@ -43,7 +52,7 @@ onload = () => {
   // Formulario add lista de compras ---------------------------------------------
   document.querySelector('#addCompra').onclick = () => {
     // ativa a tela de formulario
-    ativa('tela4');
+    ativa('formulario');
 
     // foca no campo
     document.querySelector('#nome').focus();
@@ -61,21 +70,10 @@ onload = () => {
     lblItem.innerHTML = 'Nome da Lista:';
 
     // esconde campos desnecessarios
-    let divQtd = document.getElementById('divQtd').style;
-    divQtd.visibility = 'hidden'; divQtd.position = 'fixed'
-
-    let divUnidade = document.getElementById('divUnidade').style;
-    divUnidade.visibility = 'hidden'; divUnidade.position = 'fixed'
-
-    let divValidade = document.getElementById('divValidade').style;
-    divValidade.visibility = 'hidden'; divValidade.position = 'fixed'
-
-    // muda o id dos botoes para executar funcoes especificas
-    document.getElementById('btnInc').id = 'incCompra';
-    document.getElementById('btnCanc').id = 'cancCompra';
+    desabilitaCampos();
 
     // evento de inclusao
-    document.querySelector('#incCompra').onclick = () => {
+    document.querySelector('#btnInc').onclick = () => {
       let inputNome = document.getElementById('nome');
 
       // se o campo nao estiver vazio
@@ -94,9 +92,7 @@ onload = () => {
         inputNome.value = '';
         // volta a cor do field para o normal
         inputNome.style.borderColor = '#8f9799';
-        // volta os botoes para para o id generico
-        document.getElementById('incCompra').id = 'btnInc';
-        document.getElementById('cancCompra').id = 'btnCanc';
+
         // volta para tela anterior         
         ativa('tela1');
 
@@ -109,15 +105,12 @@ onload = () => {
     };
 
     // evento de cancelar
-    document.querySelector('#cancCompra').onclick = () => {
+    document.querySelector('#btnCanc').onclick = () => {
       let inputNome = document.getElementById('nome');
       // limpa o valor do campo
       inputNome.value = '';
       // volta a cor do field para o normal
       inputNome.style.borderColor = '#8f9799';
-      // volta os botoes para para o id generico
-      document.getElementById('incCompra').id = 'btnInc';
-      document.getElementById('cancCompra').id = 'btnCanc';
       // volta para tela anterior         
       ativa('tela1');
 
@@ -126,6 +119,109 @@ onload = () => {
     };
   };
   // Formulario add lista de compras ---------------------------------------------
+
+  // Formulario add produto para compra ---------------------------------------------
+  document.querySelector('#addProduto').onclick = () => {
+    // ativa a tela de formulario
+    ativa('formulario');
+
+    // foca no campo
+    document.querySelector('#nome').focus();
+
+    // esconde a barra de navegacao
+    let nav = document.getElementById('nav').style;
+    nav.visibility = 'hidden';
+
+    // muda o titulo do formulario
+    let lblNome = document.querySelector('#lblNome');
+    lblNome.innerHTML = 'Adicionar Produto';
+
+    // muda o nome do item do formulario
+    let lblItem = document.querySelector('#lblItem');
+    lblItem.innerHTML = 'Nome do Item:';
+
+    // esconde campos desnecessarios
+    desabilitaCampos();
+
+    // habilita campos necessarios
+    habilitaCampo('divQtd');
+    habilitaCampo('divUnidade');
+
+    // evento de inclusao
+    document.querySelector('#btnInc').onclick = () => {
+      // cria os objetos correspondentes aos campos do formulario
+      let inputNome = document.getElementById('nome');
+      let inputQtd = document.getElementById('qtd');
+      let inputUnidade = document.getElementById('unidade');
+      
+      // torna vermelho o campo com o valor faltando 
+      //ou remove o vermelho do campo com valor preenchido
+      if (inputNome.value == '')inputNome.style.borderColor = '#f00';
+      else inputNome.style.borderColor = '#8f9799';
+      
+      if (inputQtd.value == '')inputQtd.style.borderColor = '#f00';
+      else inputQtd.style.borderColor = '#8f9799';
+
+      if (inputUnidade.value == '')inputUnidade.style.borderColor = '#f00';
+      else inputUnidade.style.borderColor = '#8f9799';
+
+      // se os campos nao estiverem vazios
+      if (inputNome.value != '' && inputQtd.value != '' && inputUnidade.value != '') {
+        // insere o elemento
+        produtosCompras.push({
+          idLista: idLista,
+          id: Math.random().toString().replace('0.', ''),
+          nome: inputNome.value,
+          qtd: inputQtd.value,
+          unidade: inputUnidade.value
+        });
+        // atualiza a lista
+        mostraProdutosCompra();
+        // salva localmente
+        localStorage.setItem('produtosCompras', JSON.stringify(produtosCompras));
+
+        // limpa o valor dos campos
+        inputNome.value = '';
+        inputQtd.value = '';
+        inputUnidade.value = '';
+
+        // volta a cor dos fields para o normal
+        inputNome.style.borderColor = '#8f9799';
+        inputQtd.style.borderColor = '#8f9799';
+        inputUnidade.style.borderColor = '#8f9799';
+
+        // volta para tela anterior         
+        ativa('tela3');
+
+        // mostra a barra de navegacao
+        nav.visibility = 'visible';
+      }
+    };
+
+    // evento de cancelar
+    document.querySelector('#btnCanc').onclick = () => {
+      let inputNome = document.getElementById('nome');
+      let inputQtd = document.getElementById('qtd');
+      let inputUnidade = document.getElementById('unidade');
+
+      // limpa o valor dos campos
+      inputNome.value = '';
+      inputQtd.value = '';
+      inputUnidade.value = '';
+
+      // volta a cor dos fields para o normal
+      inputNome.style.borderColor = '#8f9799';
+      inputQtd.style.borderColor = '#8f9799';
+      inputUnidade.style.borderColor = '#8f9799';
+
+      // volta para tela anterior         
+      ativa('tela3');
+
+      // mostra a barra de navegacao
+      nav.visibility = 'visible';
+    };
+  };
+  // Formulario add produto para compra ---------------------------------------------
 
 
 };
@@ -156,7 +252,15 @@ const mostraListasCompras = () => {
     lista.appendChild(btnAlterar);
 
     label.onclick = () => {
+      // muda o nome da tela dos produtos
+      let tituloCompra = document.querySelector('#tituloCompra');
+      tituloCompra.innerHTML = i.nome;
+      // mostra a tela produtosCompra
       ativa('tela3');
+      // atualiza o idLista
+      idLista = i.id;
+      // carrega os produtos
+      mostraProdutosCompra();
     };
 
     btnAlterar.onclick = () => {
@@ -169,7 +273,7 @@ const mostraListasCompras = () => {
 
 const alterarListaCompras = (lista) => {
   // ativa a tela de formulario
-  ativa('tela4');
+  ativa('formulario');
 
   // preenche o campo
   document.querySelector('#nome').value = lista.nome;
@@ -190,20 +294,13 @@ const alterarListaCompras = (lista) => {
   lblItem.innerHTML = 'Nome da Lista:';
 
   // esconde campos desnecessarios
-  let divQtd = document.getElementById('divQtd').style;
-  divQtd.visibility = 'hidden'; divQtd.position = 'fixed'
+  desabilitaCampos();
 
-  let divUnidade = document.getElementById('divUnidade').style;
-  divUnidade.visibility = 'hidden'; divUnidade.position = 'fixed'
-
-  let telaExclusao = document.getElementById('divValidade').style;
-  telaExclusao.visibility = 'hidden'; telaExclusao.position = 'fixed'
-
-  // muda o id dos botoes para executar funcoes especificas
+  // muda o id dos botoes so pela semantica
   document.getElementById('btnInc').id = 'alteraCompra';
   document.getElementById('btnCanc').id = 'excluiCompra';
 
-  // muda o texto do botao
+  // muda o texto dos botoes
   document.getElementById('alteraCompra').innerHTML = 'Salvar';
   document.getElementById('excluiCompra').innerHTML = 'Excluir';
 
@@ -224,11 +321,11 @@ const alterarListaCompras = (lista) => {
       inputNome.value = '';
       // volta a cor do field para o normal
       inputNome.style.borderColor = '#8f9799';
-      // volta os botoes para para o id generico
+      // volta os botoes para o id generico
       document.getElementById('alteraCompra').id = 'btnInc';
       document.getElementById('excluiCompra').id = 'btnCanc';
 
-      // volta o texto original do botao
+      // volta o texto original dos botoes
       document.getElementById('btnInc').innerHTML = 'Incluir';
       document.getElementById('btnCanc').innerHTML = 'Cancelar';
 
@@ -276,9 +373,6 @@ const alterarListaCompras = (lista) => {
 
       // mostra a barra de navegacao
       nav.visibility = 'visible';
-
-      // esconde a tela de exclusao
-      telaExclusao.classList.add("hidden");
     }
 
     document.querySelector('#btnNao').onclick = () => {
@@ -288,3 +382,80 @@ const alterarListaCompras = (lista) => {
 
   };
 } // fim alterar lista compras
+
+const mostraProdutosCompra = () => {
+  // cria um vetor de produtos da compra especifica
+  let produtos = produtosCompras.filter((obj) => obj.idLista == idLista);
+
+  if (produtos.length == 0) {
+    let enviarCompra = document.getElementById('enviarCompra');
+    // esconde o botao de enviar para dispensa
+    enviarCompra.classList.add("hidden");
+  } else {
+    // mostra o botao de enviar para dispensa
+    enviarCompra.classList.remove("hidden");
+  }
+
+  // cria o objeto dom que ira carregar os produtos
+  const pc = document.querySelector('#produtosCompra');
+  pc.innerHTML = '';
+
+  produtos.forEach((i) => {
+    // cria a linha da tabela
+    let tr = document.createElement('tr');
+
+    // cria e edita os dados da linha
+    let nome = document.createElement('td');
+    nome.innerHTML = i.nome;
+    let qtd = document.createElement('td');
+    qtd.innerHTML = i.qtd;
+    let unidade = document.createElement('td');
+    unidade.innerHTML = i.unidade;
+
+    // cria o checkbox
+    var checkbox = document.createElement("INPUT");
+    checkbox.setAttribute("type", "checkbox");
+    checkbox.id = 'check' + i.id;
+    checkbox.value = i.check;
+
+    // insere o check box no td
+    let checkArea = document.createElement('td');
+    checkArea.appendChild(checkbox);
+
+
+    // adiciona os dados a linha
+    tr.appendChild(nome);
+    tr.appendChild(qtd);
+    tr.appendChild(unidade);
+    tr.appendChild(checkArea);
+
+
+    tr.onclick = () => {
+      ativa('tela3');
+      //alterarProdutoCompra(i);
+    };
+
+    // adiciona a linha da tabela ao conteudo
+    pc.appendChild(tr);
+
+  }); // fim do for
+};
+
+const desabilitaCampos = () => {
+  // esconde campos opcionais
+  let divQtd = document.getElementById('divQtd').style;
+  divQtd.visibility = 'hidden'; divQtd.position = 'fixed'
+
+  let divUnidade = document.getElementById('divUnidade').style;
+  divUnidade.visibility = 'hidden'; divUnidade.position = 'fixed'
+
+  let divValidade = document.getElementById('divValidade').style;
+  divValidade.visibility = 'hidden'; divValidade.position = 'fixed'
+
+}
+
+const habilitaCampo = (idCampo) => {
+  let elemento = document.getElementById(idCampo).style;
+  elemento.visibility = 'visible'; elemento.position = 'relative';
+}
+
