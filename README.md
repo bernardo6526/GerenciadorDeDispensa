@@ -23,20 +23,22 @@ A seguir tem a explicação de cada tela e o seu none dentro do código delimita
 ## Dispensa ('tela2')
 
 Nessa página é possível visualizar os produtos da dispensa. Você pode adicionar um novo produto no botão +, alterar qualquer campo do produto clicando em cima dele, ou excluir clicando no ícone da lixeira após clicar em um atributo qualquer do produto que deseja excluir.
+
+![enter image description here](https://i.imgur.com/6FcwyLS.png)
 ![enter image description here](https://i.imgur.com/W6WdC11.png)
 
 ## Produtos da Compra ('tela3'):
 
 Nessa página é possível visualizar os produtos de uma lista de compra específica. Você pode adicionar um novo produto no botão +, alterar qualquer campo do produto clicando em cima dele, ou excluir clicando no ícone da lixeira após clicar em um atributo qualquer do produto que deseja excluir. Além disso você pode salvar os produtos na dispensa, marcando no checkbox aqueles que comprou e clicando no botão enviar para dispensa.
-![enter image description here])
+![enter image description here](https://i.imgur.com/zNB8KyA.png)
   
 
 ## Formulário ('formulario'):
 
 Nessa página é possível inserir dados para incluir uma nova lista de compras, ou um novo produto da compra, ou um novo produto da dispensa. Esse formulário é dinâmico, ele mostra apenas os campos necessários para tela que chamou ele. Existe um botão de incluir, que salva a informação e um de cancelar que apenas retorna a tela anterior. Além disso, existe validação dos campos. Campos vazios são marcados como vermelho e impedem a inclusão até que sejam preenchidos.
-![enter image description here]()
+![enter image description here](https://i.imgur.com/spaCBeK.png)
   
-  ![enter image description here]()
+  ![enter image description here](https://i.imgur.com/p1ZTx7V.png)
 
 # Dados armazenados
 A aplicação utiliza três estruturas de dados principais:
